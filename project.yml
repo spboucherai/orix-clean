@@ -1,6 +1,16 @@
-# ORIX Clean — project.yml
-# Description: XcodeGen project definition (run Scripts/build.sh generate).
-# Author: Simon-Pierre Boucher — contact@spboucher.ai
+# =============================================================================
+# SP BOUCHER | SOURCE FILE
+# =============================================================================
+# Project      : ORIX Clean
+# File         : project.yml
+# Author       : Simon-Pierre Boucher | https://spboucher.ai
+# Contact      : support@spboucher.ai
+# Copyright    : (c) 2026 Simon-Pierre Boucher
+# License      : Proprietary, all rights reserved (see license file)
+# =============================================================================
+# END OF SP BOUCHER SOURCE HEADER
+# =============================================================================
+
 name: ORIXClean
 options:
   bundleIdPrefix: ai.spboucher.orix

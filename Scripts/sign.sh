@@ -1,8 +1,47 @@
 #!/usr/bin/env bash
-# ORIX Clean — Scripts/sign.sh
-# Description: Builds the Release configuration (universal, Hardened Runtime), signed with the Developer ID Application
-#              identity already in the keychain, and verifies the result. Produces dist/ORIX Clean.app. Uploads nothing.
-# Author: Simon-Pierre Boucher — contact@spboucher.ai
+# =============================================================================
+#                  SP BOUCHER | INFRASTRUCTURE & AUTOMATION
+#             ARTIFICIAL INTELLIGENCE • FINANCE • ENGINEERING
+# =============================================================================
+#
+# Project          : ORIX Clean
+# File             : Scripts/sign.sh
+# Description      : Builds the Release configuration (universal, Hardened
+#                    Runtime), signed with the Developer ID Application
+#                    identity already in the keychain, and verifies the result.
+#                    Produces dist/ORIX Clean.app. Uploads nothing.
+# Module           : Scripts
+# Repository       : https://git.spboucher.ai/orix-clean
+# Created          : 2026-11-21
+# Last Modified    : 2026-11-21
+#
+# Author           : Simon-Pierre Boucher
+# Position         : Professor of Finance
+# Institution      : Université du Québec en Outaouais (UQO)
+# Organization     : SP Boucher
+# Website          : https://spboucher.ai
+# Git              : https://git.spboucher.ai
+#
+# Preferred Contact: support@spboucher.ai
+# Technical Contact: dev@spboucher.ai
+# Security/Admin   : admin@spboucher.ai
+#
+# Copyright (c) 2026
+# Simon-Pierre Boucher
+# All rights reserved where applicable. This file is governed by the
+# applicable project license, copyright notices and relevant law.
+# Existing third-party rights and notices remain unaffected.
+#
+# License          : Proprietary, all rights reserved (see license file)
+# License File     : LICENSE
+#
+# Do not embed credentials, private keys, access tokens,
+# certificates or confidential personal information.
+#
+# =============================================================================
+# END OF SP BOUCHER SOURCE HEADER
+# =============================================================================
+
 set -euo pipefail
 cd "$(dirname "$0")/.."
 DD="build/DerivedData"
