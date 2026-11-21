@@ -13,7 +13,7 @@ Everything below was observed on that machine. What was not observed is listed u
 | Bundle identifier | `ai.spboucher.orix.clean` |
 | Minimum macOS | 15.0 |
 | Architectures | arm64, x86_64 (universal) |
-| Repository | **Private**: `gitsrv:srv/git-private/orix-clean.git` (SSH only, not served by git.spboucher.ai) |
+| Repository | Public since 2026-11-21, at the owner's request: https://git.spboucher.ai/orix-clean |
 | Commit | see `git log -1` (the report is part of the release commit) |
 | Developer ID signing | Valid — Developer ID Application: Simon-Pierre Boucher (3YM54G49SN), Hardened Runtime (`flags=0x10000(runtime)`), secure timestamp, empty entitlements, no `get-task-allow` |
 | Notarization — app | **Accepted** — submission `c2e7cbaa-9410-466f-b912-b9666f5a02b7`, 0 issues in Apple's log, stapled and validated |
@@ -21,7 +21,8 @@ Everything below was observed on that machine. What was not observed is listed u
 | Gatekeeper | `accepted`, `source=Notarized Developer ID` for the app, the DMG, and the app extracted from the ZIP |
 | DMG | `ORIXClean-1.0.0.dmg`, 5,133,225 bytes, SHA-256 `c7a8b13f3db143e80d2902882d8fe069d68b6e89a1de212411dffdb7334bcd34` |
 | ZIP | `ORIXClean-1.0.0.zip`, 4,032,161 bytes, SHA-256 `126a980dd974136fc958ff7ab9a9b735d68aa2cc162d2729fa4f7d55a03da9fd` |
-| SPB Git release URL | **None. Not published** (see section 9) |
+| SPB Git release URL | https://git.spboucher.ai/orix-clean/releases — assets under https://git.spboucher.ai/releases/orix-clean/v1.0.0/ |
+| Release tag | `v1.0.0` = `aad1fa5` (the commit the binaries were built from; later commits change documentation only) |
 
 ## 2. Implemented features
 
@@ -112,18 +113,18 @@ The default thread count (3; 1 in Low Power Mode or under thermal pressure) was 
 | Intel Macs | x86_64 slice is in the binary; **never run** |
 | Non-APFS, network and large external volumes | Small APFS disk images only; **otherwise not tested** |
 
-## 9. Outstanding approvals
+## 9. Publication and approvals
 
-1. **Publication.** The brief asks for a private repository and a versioned SPB Git release. git.spboucher.ai has no private repositories: everything under its root is public, and release downloads are public URLs. The source was therefore pushed to a private SSH-only location, and **no release was created**. To publish, the owner must choose one of:
-   - make the repository public on the forge and attach the release (`spbgit release upload orix-clean v1.0.0 dist/ORIXClean-1.0.0.dmg`, same for the ZIP and `SHA256SUMS.txt`), then verify downloads and README rendering; or
-   - keep the source private and publish only the binaries by another channel.
-2. **Tag.** `v1.0.0` is created locally and in the private repository; it has no public counterpart.
-3. **Apple Developer web pages** (developer.apple.com, App Store Connect) were not opened: signing and notarization used the Developer ID identity and the notarytool keychain profile already installed, and App Store Connect is not involved in Developer ID distribution. No agreement was accepted and no credential was created or changed.
+- The brief asked for a private repository by default. The source was first pushed to a private SSH-only location; on 2026-11-21 the owner asked for a public repository and a release, and both were done the same day.
+- Release assets: `ORIXClean-1.0.0.dmg`, `ORIXClean-1.0.0.zip`, `SHA256SUMS.txt`, each with a `.sha256` sidecar.
+- Verification after upload: the three files were downloaded from the public URLs; sizes and SHA-256 match `dist/`, `stapler validate` succeeds on the downloaded DMG and `spctl` answers `accepted, source=Notarized Developer ID`.
+- README on the forge: the served page contains the 12 Mermaid blocks and every one of the 20 local images is served with HTTP 200. It was not inspected visually in a browser.
+- Apple Developer web pages (developer.apple.com, App Store Connect) were not opened: signing and notarization used the Developer ID identity and the notarytool keychain profile already installed. No agreement was accepted and no credential was created or changed.
+- Nothing is outstanding. The earlier private copy (`gitsrv:srv/git-private/orix-clean.git`) still exists and can be deleted.
 
 ## 10. Not verified
 
-- README rendering on the SPB Git website (the repository is not on the forge).
-- Release downloads (no release exists).
+- README rendering in a real browser (checked from the served HTML only).
 - Installation on a second, clean Mac. Gatekeeper was assessed with `spctl` on the build Mac only.
 - VoiceOver with a real user, Voice Control, measured contrast ratios.
 - French screens other than the storage map (strings are complete and checked for placeholders; layout was viewed on one screen).
@@ -139,7 +140,6 @@ See README, section 33. The main ones: one tested configuration; memory proporti
 
 ## 12. Remaining work
 
-- Owner decision on publication (section 9).
 - Run on macOS 15, macOS 26 and an Intel Mac.
 - Try the app on a real home folder with Full Disk Access and on a real photo collection.
 - Plural-aware strings; background sampling; layered icon for macOS 26 and later.

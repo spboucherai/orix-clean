@@ -32,10 +32,14 @@
 ![Signing](https://img.shields.io/badge/signed-Developer%20ID-6366F1?style=flat-square)
 ![Notarization](https://img.shields.io/badge/notarization-accepted%20by%20Apple-22C55E?style=flat-square)
 ![DMG](https://img.shields.io/badge/DMG-5.1%20MB-6366F1?style=flat-square)
-![Release](https://img.shields.io/badge/release-built%2C%20not%20published-F59E0B?style=flat-square)
+![Release](https://img.shields.io/badge/release-v1.0.0%20published-22C55E?style=flat-square)
 ![Network](https://img.shields.io/badge/network%20code-none-22C55E?style=flat-square)
 ![Dependencies](https://img.shields.io/badge/third--party%20packages-0-22C55E?style=flat-square)
 ![Languages](https://img.shields.io/badge/languages-English%20%C2%B7%20Fran%C3%A7ais%20(CA)-06B6D4?style=flat-square)
+
+![Commits](https://git.spboucher.ai/badge/orix-clean/commits.svg) ![Last commit](https://git.spboucher.ai/badge/orix-clean/last-commit.svg) ![Language](https://git.spboucher.ai/badge/orix-clean/language.svg) ![Size](https://git.spboucher.ai/badge/orix-clean/size.svg) ![Tags](https://git.spboucher.ai/badge/orix-clean/tags.svg)
+
+**[Download ORIX Clean 1.0.0 (DMG, 5.1 MB)](https://git.spboucher.ai/releases/orix-clean/v1.0.0/ORIXClean-1.0.0.dmg)** · [ZIP](https://git.spboucher.ai/releases/orix-clean/v1.0.0/ORIXClean-1.0.0.zip) · [SHA-256](https://git.spboucher.ai/releases/orix-clean/v1.0.0/SHA256SUMS.txt) · [All releases](https://git.spboucher.ai/orix-clean/releases)
 
 <br>
 
@@ -343,7 +347,7 @@ Decisions and their reasons (Canvas rather than Metal, SQLite rather than SwiftD
 
 ## 24. Installation
 
-1. Download `ORIXClean-1.0.0.dmg` (see [Release Status](#32-release-status)).
+1. Download [`ORIXClean-1.0.0.dmg`](https://git.spboucher.ai/releases/orix-clean/v1.0.0/ORIXClean-1.0.0.dmg).
 2. Check it: `shasum -a 256 ORIXClean-1.0.0.dmg` must match `SHA256SUMS.txt`.
 3. Open the disk image and drag **ORIX Clean** to **Applications**.
 4. Optional: System Settings › Privacy & Security › Full Disk Access › enable ORIX Clean, to include protected folders and the Trash.
@@ -430,15 +434,16 @@ English and Canadian French (684 strings). Sizes, numbers and dates are formatte
 | Item | Status (2026-11-21) |
 |---|---|
 | Version | 1.0.0, build 1 |
-| Source repository | Private, `gitsrv:srv/git-private/orix-clean.git` (SSH only). git.spboucher.ai serves public repositories only, so the repository is deliberately **not** on the forge. |
+| Source repository | Public since 2026-11-21 at the owner's request: <https://git.spboucher.ai/orix-clean> (`gitsrv:srv/git/orix-clean.git`) |
 | Developer ID signature | Valid — `Developer ID Application: Simon-Pierre Boucher (3YM54G49SN)`, Hardened Runtime, secure timestamp, no entitlements |
 | Apple notarization — app | **Accepted**, submission `c2e7cbaa-9410-466f-b912-b9666f5a02b7`, ticket stapled |
 | Apple notarization — DMG | **Accepted**, submission `ff776146-c989-45d6-99de-c93bb217d8c1`, ticket stapled |
 | Gatekeeper | `accepted`, source *Notarized Developer ID*, for the app, the DMG and the app extracted from the ZIP |
 | `ORIXClean-1.0.0.dmg` | 5,133,225 bytes · SHA-256 `c7a8b13f3db143e80d2902882d8fe069d68b6e89a1de212411dffdb7334bcd34` |
 | `ORIXClean-1.0.0.zip` | 4,032,161 bytes · SHA-256 `126a980dd974136fc958ff7ab9a9b735d68aa2cc162d2729fa4f7d55a03da9fd` |
-| SPB Git release | **Not published.** A release on git.spboucher.ai is public; it waits for the owner's authorization. The artifacts are in `dist/` on the build Mac. |
-| README rendering on SPB Git | Not verified (the repository is not on the forge). Image paths and Mermaid blocks were checked locally. |
+| SPB Git release | **Published**: <https://git.spboucher.ai/orix-clean/releases> — tag `v1.0.0`; DMG, ZIP and `SHA256SUMS.txt` under `https://git.spboucher.ai/releases/orix-clean/v1.0.0/` |
+| Download verification | The three files were downloaded back from the forge: sizes and SHA-256 match, the DMG's stapled ticket validates and Gatekeeper answers `accepted` |
+| README rendering on SPB Git | Checked from the served page: 12 Mermaid blocks present, all 20 local images served (HTTP 200). Not looked at in a browser. |
 
 Full detail: [`RELEASE-REPORT.md`](RELEASE-REPORT.md).
 
