@@ -1,0 +1,28 @@
+# Build products
+build/
+dist/
+.build/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcresult
+.swiftpm/
+# macOS
+.DS_Store
+# Signing material and credentials: never tracked
+*.p8
+*.p12
+*.cer
+*.pem
+*.mobileprovision
+*.provisionprofile
+*.keychain
+*.keychain-db
+AuthKey_*
+.env
+.env.*
+# Private scan output
+*.orixreport
+reports/
+scratch/
