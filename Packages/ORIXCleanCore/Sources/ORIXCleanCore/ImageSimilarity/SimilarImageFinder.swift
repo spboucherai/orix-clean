@@ -46,8 +46,6 @@ public struct SimilarGroup: Sendable, Hashable, Identifiable {
     public var images: [SimilarImage]
     /// 0…1, from the largest measured distance between linked members. Perceptual similarity, never proof of equality.
     public var confidence: Double
-    /// True when distances come from Vision; false when only the difference hash was available.
-    public var visionConfirmed: Bool
 }
 
 public struct SimilarProgress: Sendable {
@@ -115,7 +113,6 @@ public final class SimilarImageFinder: @unchecked Sendable {
         var parent = Array(0 ..< count)
         func find(_ x: Int) -> Int { var x = x; while parent[x] != x { parent[x] = parent[parent[x]]; x = parent[x] }; return x }
         var weakest = [Float](repeating: 1, count: count)
-        var vision = true
         func link(_ a: Int, _ b: Int, _ score: Float) {
             let ra = find(a), rb = find(b)
             let w = min(weakest[ra], weakest[rb], score)
@@ -134,7 +131,7 @@ public final class SimilarImageFinder: @unchecked Sendable {
                 return structural
             }
             let va = vector(a), vb = vector(b)
-            guard !va.isEmpty, va.count == vb.count else { vision = false; return nil }
+            guard !va.isEmpty, va.count == vb.count else { return nil }
             let d = Self.distance(va, vb)
             let perceptual = 1 - d / (options.distanceThreshold * 2)
             if bits <= options.hashThreshold, d <= options.distanceThreshold { return max(structural, perceptual) }
@@ -196,7 +193,7 @@ public final class SimilarImageFinder: @unchecked Sendable {
                 return pa != pb ? pa > pb : a.path < b.path
             }
             let confidence = Double(max(0, min(1, weakest[rootIndex])))
-            groups.append(SimilarGroup(id: images.map { $0.path }.min() ?? "", images: images, confidence: confidence, visionConfirmed: vision))
+            groups.append(SimilarGroup(id: images.map { $0.path }.min() ?? "", images: images, confidence: confidence))
         }
         groups.sort { $0.images.reduce(0) { $0 + $1.allocatedSize } > $1.images.reduce(0) { $0 + $1.allocatedSize } }
         return SimilarResult(groups: isCancelled ? [] : groups, imagesExamined: count, unreadable: count - valid.count,

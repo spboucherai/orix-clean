@@ -36,7 +36,7 @@ public struct SafetyPolicy: Sendable {
         for prefix in systemPrefixes where path == prefix || path.hasPrefix(prefix + "/") {
             return .denied(L("Part of macOS or of a system-managed area."))
         }
-        if path.hasPrefix("/private/var"), !(path.hasPrefix("/private/var/folders/") && parts.count > 5), !(path.hasPrefix("/private/var/tmp/")) {
+        if path.hasPrefix("/private/var"), !path.hasPrefix("/private/var/folders/"), !(path.hasPrefix("/private/var/tmp/")) {
             return .denied(L("Part of macOS or of a system-managed area."))
         }
         if path == "/private" || path == "/private/tmp" || path == "/private/var/tmp" { return .denied(L("A system folder itself is never removed.")) }
@@ -51,6 +51,14 @@ public struct SafetyPolicy: Sendable {
             return .denied(L("A standard folder itself is never removed; choose items inside it."))
         }
         if parts.count == 2, parts[0] == "Volumes" { return .denied(L("The root of a volume is protected.")) }
+        // A Trash folder itself (per-user Trash of a volume) is structural; only its content can be removed.
+        if parts.count == 4, parts[0] == "Volumes", parts[2] == ".Trashes" { return .denied(L("A volume service folder is protected.")) }
+        // The per-user temporary and cache roots themselves.
+        if path.hasPrefix("/private/var/folders/"), parts.count <= 6 { return .denied(L("A system folder itself is never removed.")) }
+        // Credentials and keys kept in dot-folders of the home folder.
+        for secret in [".ssh", ".gnupg", ".aws", ".kube", ".config/gcloud", ".password-store"] where path == home + "/" + secret || path.hasPrefix(home + "/" + secret + "/") {
+            return .denied(L("Holds keys or credentials; ORIX Clean never removes it."))
+        }
         if parts.count >= 3, parts[0] == "Volumes", parts[2] == ".Trashes" || parts[2] == ".Spotlight-V100" || parts[2] == ".fseventsd", parts.count == 3 {
             return .denied(L("A volume service folder is protected."))
         }

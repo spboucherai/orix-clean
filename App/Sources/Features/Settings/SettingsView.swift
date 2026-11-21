@@ -26,7 +26,7 @@ struct SettingsView: View {
                     Text(L("Content size (file length)")).tag(SizeKind.logical.rawValue)
                 }
                 Toggle(L("Open applications and other packages in the storage map"), isOn: $showPackages)
-                Text(L("The language follows macOS (English and Canadian French). Motion follows “Reduce motion” and contrast follows “Increase contrast” in System Settings > Accessibility."))
+                Text(L("The language follows macOS (English and Canadian French). Motion follows “Reduce motion” in System Settings > Accessibility."))
                     .font(.caption).foregroundStyle(ORIX.Palette.textSecondary)
             }
             .formStyle(.grouped)

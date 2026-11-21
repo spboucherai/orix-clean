@@ -88,7 +88,8 @@ public enum RecommendationEngine {
             }
         }
         if let caches = f.caches {
-            let size = caches.filter { $0.risk == .low }.reduce(0) { $0 + $1.measurement.allocated }
+            let caches = caches.filter { $0.risk == .low }
+            let size = caches.reduce(0) { $0 + $1.measurement.allocated }
             if size >= 2 * gb {
                 out.append(Recommendation(id: "caches", title: L("Application caches are large"),
                                           evidence: L("%d cache and log locations use %@.", caches.count, ByteFormat.string(size)),

@@ -16,7 +16,8 @@ import Testing
                   "/Volumes", "/Volumes/Backup", "/private/var/db/receipts", "/etc/hosts", "/var/root", "/System/Applications/Mail.app",
                   "/Applications/Safari.app/Contents/MacOS/Safari", "/Users/tester/Pictures/Photos Library.photoslibrary/database/Photos.sqlite",
                   "/System/Volumes/Data/Users/tester/Documents", "relative/path", "/Users/tester/Documents/../Library", "/Users/tester/.Trash",
-                  "/private/tmp", "/tmp", "/Volumes/Backup/.Trashes"] {
+                  "/private/tmp", "/tmp", "/Volumes/Backup/.Trashes", "/Volumes/Backup/.Trashes/501", "/private/var/folders/ab/cdef/T",
+                  "/var/folders/ab/cdef", "/Users/tester/.ssh", "/Users/tester/.ssh/id_ed25519", "/Users/tester/.gnupg/pubring.kbx", "/Users/tester/.aws/credentials"] {
             #expect(policy.evaluate(p) != .allowed, "\(p) must be protected")
         }
     }
@@ -160,7 +161,9 @@ import Testing
         let p2 = CleanupPlan(items: [item((cache as NSString).deletingLastPathComponent)])
         let r2 = e.execute(plan: p2, authorization: CleanupAuthorization(confirming: p2, highRiskAcknowledged: true), mode: .permanent)
         #expect(r2.count(.skipped) == 1 && FileManager.default.fileExists(atPath: cache))
-        let p3 = CleanupPlan(items: [item(s.file("t.bin", size: 10), category: .trash)])
+        let outside = CleanupPlan(items: [item(s.file("t.bin", size: 10), category: .trash)])
+        #expect(e.execute(plan: outside, authorization: CleanupAuthorization(confirming: outside, highRiskAcknowledged: true), mode: .permanent).count(.skipped) == 1)
+        let p3 = CleanupPlan(items: [item(s.file("home/.Trash/t.bin", size: 10), category: .trash)])
         let r3 = e.execute(plan: p3, authorization: CleanupAuthorization(confirming: p3, highRiskAcknowledged: true), mode: .permanent)
         #expect(r3.count(.permanentlyDeleted) == 1)
         let cancelled = engine(s); cancelled.cancel()

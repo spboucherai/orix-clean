@@ -4513,6 +4513,22 @@
     }
    }
   },
+  "Holds keys or credentials; ORIX Clean never removes it.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Holds keys or credentials; ORIX Clean never removes it."
+     }
+    },
+    "fr-CA": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Contient des clés ou des identifiants ; ORIX Clean ne le supprime jamais."
+     }
+    }
+   }
+  },
   "Home Folder": {
    "localizations": {
     "en": {
@@ -9681,18 +9697,18 @@
     }
    }
   },
-  "The language follows macOS (English and Canadian French). Motion follows “Reduce motion” and contrast follows “Increase contrast” in System Settings > Accessibility.": {
+  "The language follows macOS (English and Canadian French). Motion follows “Reduce motion” in System Settings > Accessibility.": {
    "localizations": {
     "en": {
      "stringUnit": {
       "state": "translated",
-      "value": "The language follows macOS (English and Canadian French). Motion follows “Reduce motion” and contrast follows “Increase contrast” in System Settings > Accessibility."
+      "value": "The language follows macOS (English and Canadian French). Motion follows “Reduce motion” in System Settings > Accessibility."
      }
     },
     "fr-CA": {
      "stringUnit": {
       "state": "translated",
-      "value": "La langue suit macOS (anglais et français canadien). Les animations suivent « Réduire les animations » et le contraste suit « Augmenter le contraste » dans Réglages Système > Accessibilité."
+      "value": "La langue suit macOS (anglais et français canadien). Les animations suivent « Réduire les animations » dans Réglages Système > Accessibilité."
      }
     }
    }

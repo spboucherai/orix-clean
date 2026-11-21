@@ -9,6 +9,9 @@ struct OverviewView: View {
     @Environment(AppModel.self) private var model
     @AppStorage("mapPalette") private var paletteName = MapPalette.orix.rawValue
     private var palette: MapPalette { MapPalette(rawValue: paletteName) ?? .orix }
+    @AppStorage("onboarded") private var onboarded = false
+
+    private func loadAll() { model.loadCaches(); model.loadDeveloper(); model.loadDownloads(); model.loadTrash() }
 
     var body: some View {
         ScrollView {
@@ -26,7 +29,9 @@ struct OverviewView: View {
             .frame(maxWidth: 1100)
             .frame(maxWidth: .infinity)
         }
-        .onAppear { model.loadCaches(); model.loadDeveloper(); model.loadDownloads(); model.loadTrash() }
+        // Nothing is read before the first-launch sheet is dismissed.
+        .onAppear { if onboarded || model.launch.skipOnboarding { loadAll() } }
+        .onChange(of: onboarded) { if onboarded { loadAll() } }
     }
 
     private var volumesCard: some View {
@@ -77,7 +82,7 @@ struct OverviewView: View {
                         StatTile(title: L("Size on disk"), value: ByteFormat.string(scan.tree[0].allocatedSize), detail: scan.tree.rootPath.abbreviatingHome)
                         StatTile(title: L("Content size"), value: ByteFormat.string(scan.tree[0].logicalSize), detail: L("Sum of file lengths"))
                         StatTile(title: L("Files"), value: ByteFormat.count(Int(scan.tree[0].fileCount)), detail: L("%@ folders", ByteFormat.count(scan.directories)))
-                        StatTile(title: L("Scan"), value: String(format: "%.1f s", scan.duration), detail: L("%@ items per second", ByteFormat.count(Int(scan.filesPerSecond))))
+                        StatTile(title: L("Scan duration"), value: String(format: "%.1f s", scan.duration), detail: L("%@ items per second", ByteFormat.count(Int(scan.filesPerSecond))))
                     }
                     if !scan.issues.isEmpty {
                         let denied = scan.issues.filter { $0.kind == .permissionDenied }.count

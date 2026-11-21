@@ -24,7 +24,7 @@ v, b, m, dmg, zp, appid, dmgid, archs = sys.argv[1:]
 def sha(p): return hashlib.sha256(open(p, 'rb').read()).hexdigest()
 meta = {"name": "ORIX Clean", "bundleIdentifier": "ai.spboucher.orix.clean", "version": v, "build": b, "minimumMacOS": m,
         "architectures": archs.split(), "signing": "Developer ID Application, Hardened Runtime",
-        "notarization": {"app": {"submission": appid, "status": "Accepted"}, "dmg": {"submission": dmgid, "status": "Accepted"}},
+        "notarization": {k: {"submission": i, "status": json.load(open(f"build/notary/{k}.json")).get("status", "unknown") if i else "unknown"} for k, i in (("app", appid), ("dmg", dmgid))},
         "artifacts": [{"file": os.path.basename(p), "bytes": os.path.getsize(p), "sha256": sha(p)} for p in (dmg, zp)]}
 json.dump(meta, open("dist/release.json", "w"), indent=1)
 print(json.dumps(meta, indent=1))

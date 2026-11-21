@@ -173,6 +173,8 @@ public enum CleanupCatalog {
         let now = Date()
         for rule in all {
             if isCancelled() { break }
+            // The temporary folder belongs to the real user; it is not part of a substitute home.
+            if rule.id == "tmp-user", home != NSHomeDirectory() { continue }
             let base = rule.path.hasPrefix("/") ? (rule.path as NSString).standardizingPath : home + "/" + rule.path
             var targets: [String] = []
             if rule.children {

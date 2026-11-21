@@ -105,7 +105,10 @@ public final class DeletionEngine: @unchecked Sendable {
             guard authorization.confirmedPaths.contains(item.path) else { record(.skipped, L("Not part of the confirmed selection.")); continue }
             if item.risk == .high, !authorization.highRiskAcknowledged { record(.skipped, L("High-risk item not explicitly acknowledged.")); continue }
             if case let .denied(why) = policy.evaluate(item.path) { record(.skipped, L("Protected: %@", why)); continue }
-            if mode == .permanent, item.category != .trash { record(.skipped, L("Permanent deletion is reserved for items already in the Trash.")); continue }
+            let inTrash = item.path.split(separator: "/").dropLast().contains { $0 == ".Trash" || $0 == ".Trashes" }
+            if mode == .permanent, item.category != .trash || !inTrash {
+                record(.skipped, L("Permanent deletion is reserved for items already in the Trash.")); continue
+            }
 
             var st = stat()
             guard lstat(item.path, &st) == 0 else { record(.skipped, L("Already gone.")); continue }

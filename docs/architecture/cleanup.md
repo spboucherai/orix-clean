@@ -169,7 +169,7 @@ catalogue items only; duplicate steps keep the first path of each group and veri
 - Root-owned or otherwise unwritable items: reported as `failed`; there is no elevation.
 - Time-of-check to time-of-use gaps: an item can still change between revalidation and the move. The window is
   one item wide and the result is a Trash move, not a deletion.
-- The permanent-mode guard relies on the item's category, which is assigned by `TrashItem.cleanupItem`; the
-  engine does not independently check that the path lies inside a Trash folder.
+- Home dot-folders other than the credential stores the policy names (`.ssh`, `.gnupg`, `.aws`, `.kube`,
+  `.config/gcloud`, `.password-store`) are allowed when the user ticks them in the map or in Large Files.
 - Free space before and after is read on the volume of the first item only.
 - Directory contents are not re-measured at removal; a folder is identified by inode.

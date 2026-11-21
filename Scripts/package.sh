@@ -22,4 +22,4 @@ create-dmg --volname "ORIX Clean $VERSION" --background build/dmg-background.png
 rm -rf "$STAGE"
 codesign --force --timestamp --sign "$IDENTITY" "$DMG"
 ditto -c -k --keepParent "$APP" "$ZIP"
-echo "built $DMG and $ZIP (version $VERSION build $BUILD). Notarize the DMG next, then run: Scripts/package.sh --finalize"
+echo "built $DMG and $ZIP (version $VERSION build $BUILD). Notarize the DMG next, then run: Scripts/finalize.sh"

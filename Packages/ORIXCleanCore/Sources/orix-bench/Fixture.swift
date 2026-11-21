@@ -85,7 +85,7 @@ enum Fixture {
         write(base + "/Frameworks/Engine.framework/Engine", bytes: Int(mb * 0.2 * 1e6))
     }
 
-    /// `scale` multiplies every size (1 ≈ 0.9 GB on disk).
+    /// `scale` multiplies every size (1 ≈ 1.9 GB on disk). Deletes `home` first..
     static func build(home: String, scale: Double = 1) {
         func mb(_ v: Double) -> Int { Int(v * scale * 1e6) }
         let fm = FileManager.default
