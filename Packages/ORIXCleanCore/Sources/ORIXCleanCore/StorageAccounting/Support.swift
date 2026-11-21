@@ -104,6 +104,7 @@ public struct Measurement: Sendable, Hashable, Codable {
     public var fileID: UInt64 = 0
     /// True when part of the item could not be read; the sizes are then a lower bound.
     public var incomplete = false
+    public init() {}
 
     public var recoverable: RecoverableEstimate {
         RecoverableEstimate(minimum: privateSize >= 0 ? privateSize : allocated, maximum: allocated)
@@ -159,7 +160,17 @@ public enum Measure {
     }
 }
 
+/// The folder shown as "~" in paths: the user's home, or the substitute home an instance was launched on.
+public enum PathDisplay {
+    nonisolated(unsafe) public static var home = NSHomeDirectory()
+}
+
 public extension String {
     /// Path with the home directory abbreviated to "~".
-    var abbreviatingHome: String { (self as NSString).abbreviatingWithTildeInPath }
+    var abbreviatingHome: String {
+        let home = PathDisplay.home
+        if self == home { return "~" }
+        if hasPrefix(home + "/") { return "~" + dropFirst(home.count) }
+        return self
+    }
 }

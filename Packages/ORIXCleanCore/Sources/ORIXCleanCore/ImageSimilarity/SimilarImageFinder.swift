@@ -19,11 +19,11 @@ public struct SimilarImageOptions: Sendable {
     /// Hamming distance (of 64 bits) at or under which two images are called similar on structure alone.
     public var strongHashThreshold = 4
     /// Largest Hamming distance accepted when Vision also agrees.
-    public var hashThreshold = 16
+    public var hashThreshold = 12
     /// Largest Vision distance accepted without structural agreement (thorough mode, finds crops).
     public var cropDistanceThreshold: Float = 0.25
     /// Largest Vision feature-print distance for two images to be called similar.
-    public var distanceThreshold: Float = 0.42
+    public var distanceThreshold: Float = 0.36
     public var thoroughLimit = 3000
     public var under: Int32 = 0
     public init() {}
@@ -54,6 +54,8 @@ public struct SimilarProgress: Sendable {
     public var done = 0
     public var total = 0
     public var stage = "fingerprint"
+    public init() {}
+    init(done: Int, total: Int, stage: String) { self.done = done; self.total = total; self.stage = stage }
 }
 
 public struct SimilarResult: Sendable {
@@ -149,12 +151,35 @@ public final class SimilarImageFinder: @unchecked Sendable {
             }
         }
         lock.lock(); state = SimilarProgress(done: 0, total: pairs.count, stage: "compare"); lock.unlock()
+        // Score every candidate pair, then build clusters around a representative, best pairs first.
+        // An image joins a cluster only if it is similar to the representative itself: no chains of "A~B, B~C" linking A and C.
+        var scored: [(Int, Int, Float)] = []
+        var scoreOf: [UInt64: Float] = [:]
         for (k, pair) in pairs.enumerated() {
             if k % 64 == 0 {
                 if isCancelled { break }
                 lock.lock(); state.done = k; lock.unlock()
             }
-            if let score = judge(pair.0, pair.1, bits: pair.2) { link(pair.0, pair.1, score) }
+            if let score = judge(pair.0, pair.1, bits: pair.2) {
+                scored.append((pair.0, pair.1, score))
+                scoreOf[UInt64(min(pair.0, pair.1)) << 32 | UInt64(max(pair.0, pair.1))] = score
+            }
+        }
+        scored.sort { $0.2 > $1.2 }
+        var representative = [Int](repeating: -1, count: count)
+        func score(_ a: Int, _ b: Int) -> Float? { scoreOf[UInt64(min(a, b)) << 32 | UInt64(max(a, b))] }
+        for (a, b, s) in scored {
+            switch (representative[a], representative[b]) {
+            case (-1, -1):
+                representative[a] = a; representative[b] = a
+                link(a, b, s)
+            case (let r, -1):
+                if r == a { representative[b] = r; link(a, b, s) } else if let rs = score(r, b) { representative[b] = r; link(r, b, rs) }
+            case (-1, let r):
+                if r == b { representative[a] = r; link(a, b, s) } else if let rs = score(r, a) { representative[a] = r; link(r, a, rs) }
+            default:
+                break
+            }
         }
 
         var members: [Int: [Int]] = [:]

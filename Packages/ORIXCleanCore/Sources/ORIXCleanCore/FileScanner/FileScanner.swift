@@ -45,6 +45,11 @@ public struct ScanProgress: Sendable {
     public var issues: Int = 0
     public var currentPath: String = ""
     public var elapsed: TimeInterval = 0
+    public init() {}
+    init(files: Int, directories: Int, allocatedBytes: Int64, issues: Int, currentPath: String, elapsed: TimeInterval) {
+        self.files = files; self.directories = directories; self.allocatedBytes = allocatedBytes; self.issues = issues
+        self.currentPath = currentPath; self.elapsed = elapsed
+    }
 }
 
 public struct ScanResult: Sendable {
@@ -141,13 +146,14 @@ public final class FileScanner: @unchecked Sendable {
 
         var workerCount = options.workers
         if workerCount <= 0 {
-            let cores = ProcessInfo.processInfo.activeProcessorCount
-            workerCount = max(2, min(8, cores / 2))
+            // Measured (docs/development/performance.md): directory enumeration is bound by the filesystem, not by cores.
+            // Three threads give ~95 % of the best throughput for a third of the CPU time of eight.
+            workerCount = min(3, max(1, ProcessInfo.processInfo.activeProcessorCount))
             switch ProcessInfo.processInfo.thermalState {
-            case .serious, .critical: workerCount = 2
+            case .serious, .critical: workerCount = 1
             default: break
             }
-            if ProcessInfo.processInfo.isLowPowerModeEnabled { workerCount = min(workerCount, 2) }
+            if ProcessInfo.processInfo.isLowPowerModeEnabled { workerCount = 1 }
         }
         let group = DispatchGroup()
         for _ in 0 ..< workerCount {

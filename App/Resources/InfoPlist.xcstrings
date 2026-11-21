@@ -1,0 +1,56 @@
+{
+ "sourceLanguage": "en",
+ "strings": {
+  "NSDesktopFolderUsageDescription": {
+   "localizations": {
+    "fr-CA": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ORIX Clean mesure les fichiers de votre dossier Bureau quand vous l’analysez. Rien ne quitte ce Mac."
+     }
+    }
+   }
+  },
+  "NSDocumentsFolderUsageDescription": {
+   "localizations": {
+    "fr-CA": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ORIX Clean mesure les fichiers de votre dossier Documents quand vous l’analysez. Rien ne quitte ce Mac."
+     }
+    }
+   }
+  },
+  "NSDownloadsFolderUsageDescription": {
+   "localizations": {
+    "fr-CA": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ORIX Clean mesure les fichiers de votre dossier Téléchargements quand vous l’analysez. Rien ne quitte ce Mac."
+     }
+    }
+   }
+  },
+  "NSNetworkVolumesUsageDescription": {
+   "localizations": {
+    "fr-CA": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ORIX Clean mesure les fichiers des volumes réseau quand vous les analysez. Rien ne quitte ce Mac."
+     }
+    }
+   }
+  },
+  "NSRemovableVolumesUsageDescription": {
+   "localizations": {
+    "fr-CA": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ORIX Clean mesure les fichiers des volumes amovibles quand vous les analysez. Rien ne quitte ce Mac."
+     }
+    }
+   }
+  }
+ },
+ "version": "1.0"
+}

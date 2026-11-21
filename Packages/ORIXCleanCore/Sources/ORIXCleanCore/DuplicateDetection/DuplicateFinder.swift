@@ -66,6 +66,7 @@ public struct DuplicateProgress: Sendable {
     public var filesDone = 0
     public var filesTotal = 0
     public var bytesHashed: Int64 = 0
+    public init() {}
 }
 
 public struct DuplicateResult: Sendable {

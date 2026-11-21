@@ -60,6 +60,10 @@ case "sample":
         for v in Volumes.mounted() where v.isStartup { store.record(volume: v, minimumInterval: 0) }
         Thread.sleep(forTimeInterval: interval)
     }
+case "fixture":
+    // orix-bench fixture <dir> [scale]: writes a sample home folder with real files.
+    Fixture.build(home: args[2], scale: args.count > 3 ? Double(args[3]) ?? 1 : 1)
+    print("fixture written to \(args[2])")
 default:
-    print("usage: orix-bench scan|dupes|similar|treemap|sample <path> …")
+    print("usage: orix-bench scan|dupes|similar|treemap|sample|fixture <path> …")
 }

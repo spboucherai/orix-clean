@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>ORIX Clean</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr-CA</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>ORIX Clean</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>ORIX Clean measures the files in your Desktop folder when you scan it. Nothing leaves this Mac.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>ORIX Clean measures the files in your Documents folder when you scan it. Nothing leaves this Mac.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>ORIX Clean measures the files in your Downloads folder when you scan it. Nothing leaves this Mac.</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2026 Simon-Pierre Boucher</string>
+	<key>NSNetworkVolumesUsageDescription</key>
+	<string>ORIX Clean measures the files on network volumes when you scan them. Nothing leaves this Mac.</string>
+	<key>NSRemovableVolumesUsageDescription</key>
+	<string>ORIX Clean measures the files on removable volumes when you scan them. Nothing leaves this Mac.</string>
+</dict>
+</plist>

@@ -1,0 +1,97 @@
+# ORIX Clean — project.yml
+# Description: XcodeGen project definition (run Scripts/build.sh generate).
+# Author: Simon-Pierre Boucher — contact@spboucher.ai
+name: ORIXClean
+options:
+  bundleIdPrefix: ai.spboucher.orix
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+packages:
+  ORIXCleanCore:
+    path: Packages/ORIXCleanCore
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: 1.0.0
+    CURRENT_PROJECT_VERSION: 1
+    DEVELOPMENT_TEAM: 3YM54G49SN
+    DEAD_CODE_STRIPPING: YES
+targets:
+  ORIXClean:
+    type: application
+    platform: macOS
+    sources:
+      - App/Sources
+      - App/Resources
+    dependencies:
+      - package: ORIXCleanCore
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: ORIX Clean
+        CFBundleName: ORIX Clean
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.utilities
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        NSHumanReadableCopyright: "© 2026 Simon-Pierre Boucher"
+        CFBundleLocalizations: [en, fr-CA]
+        CFBundleDevelopmentRegion: en
+        NSDesktopFolderUsageDescription: ORIX Clean measures the files in your Desktop folder when you scan it. Nothing leaves this Mac.
+        NSDocumentsFolderUsageDescription: ORIX Clean measures the files in your Documents folder when you scan it. Nothing leaves this Mac.
+        NSDownloadsFolderUsageDescription: ORIX Clean measures the files in your Downloads folder when you scan it. Nothing leaves this Mac.
+        NSRemovableVolumesUsageDescription: ORIX Clean measures the files on removable volumes when you scan them. Nothing leaves this Mac.
+        NSNetworkVolumesUsageDescription: ORIX Clean measures the files on network volumes when you scan them. Nothing leaves this Mac.
+    settings:
+      base:
+        PRODUCT_NAME: ORIX Clean
+        PRODUCT_BUNDLE_IDENTIFIER: ai.spboucher.orix.clean
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        SWIFT_STRICT_CONCURRENCY: complete
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_ENTITLEMENTS: App/ORIXClean.entitlements
+        ENABLE_APP_SANDBOX: NO
+        COMBINE_HIDPI_IMAGES: YES
+      configs:
+        Debug:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: "-"
+          DEVELOPMENT_TEAM: ""
+        Release:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: "Developer ID Application"
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+          OTHER_CODE_SIGN_FLAGS: "--timestamp"
+          ONLY_ACTIVE_ARCH: NO
+          ARCHS: "arm64 x86_64"
+  ORIXCleanUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources: [UITests]
+    dependencies:
+      - target: ORIXClean
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.spboucher.orix.clean.uitests
+        TEST_TARGET_NAME: ORIXClean
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+        DEVELOPMENT_TEAM: ""
+schemes:
+  ORIXClean:
+    build:
+      targets:
+        ORIXClean: all
+        ORIXCleanUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets: [ORIXCleanUITests]
+    archive:
+      config: Release
